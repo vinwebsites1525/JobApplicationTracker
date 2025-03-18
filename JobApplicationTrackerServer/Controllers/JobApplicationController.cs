@@ -15,7 +15,7 @@ namespace JobApplicationTrackerServer.Controllers;
             _repository = repository;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<JobApplication>>> GetAll()
         {
             return Ok(await _repository.GetAllAsync());
@@ -33,14 +33,14 @@ namespace JobApplicationTrackerServer.Controllers;
             return Ok(application);
         }  
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(JobApplication application)
         {
             await _repository.AddAsync(application);
             return CreatedAtAction(nameof(GetById), new { id = application.Id}, application);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> Update(int id, JobApplication application)
         {
             if(id != application.Id)
